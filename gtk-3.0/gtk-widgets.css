@@ -2306,7 +2306,7 @@ headerbar button {
 }
 
 headerbar entry {
-    padding: 6px 4px;
+    padding: 4px 4px;
 }
 
 headerbar entry:selected {
@@ -2555,6 +2555,7 @@ GtkViewport frame {
 .view {
     background-color: @theme_base_color;
     color: @theme_text_color;
+    border-radius: 4px;
 }
 
 .view:disabled,
