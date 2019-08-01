@@ -3,9 +3,9 @@
 # based on "Bluebird" by Simon Steinbeiß and Pasi Lallinaho
 # Description: As is the original theme, this theme is 100% free and open source.
 
-gtk-color-scheme	= "bg_color:#111111"
+gtk-color-scheme	= "bg_color:#000000"
 gtk-color-scheme	= "fg_color:#ffffff"
-gtk-color-scheme	= "base_color:#111111" # Background, base.
+gtk-color-scheme	= "base_color:#000000" # Background, base.
 gtk-color-scheme	= "text_color:#ffffff" # Foreground, text.
 gtk-color-scheme	= "selected_bg_color:#3478f5"
 gtk-color-scheme	= "selected_fg_color:#ffffff"
@@ -61,8 +61,8 @@ style "default"
 	GtkRange		::stepper-size				= 13
 	GtkRange		::stepper_spacing			= 0
 
-	GtkScale		::slider-length				= 16
-	GtkScale		::slider-width				= 16
+	GtkScale		::slider-length				= 7
+	GtkScale		::slider-width				= 7
 	GtkScale		::trough-side-details			= 1
 
 	GtkScrollbar		::min-slider-length			= 50
@@ -101,7 +101,7 @@ style "default"
 
 	bg[NORMAL]        = @bg_color
 	bg[PRELIGHT]      = shade (1.02, @bg_color)
-	bg[SELECTED]	  = @selected_bg_color
+	bg[SELECTED]	    = @selected_bg_color
 	bg[INSENSITIVE]   = @bg_color
 	bg[ACTIVE]        = shade (1.04, @bg_color)
 
@@ -243,8 +243,8 @@ style "button" = "wider"
 {
 	bg[NORMAL]        = shade(1.2, @bg_color)
 	bg[PRELIGHT]      = shade(1.2, @bg_color)
-	bg[ACTIVE]        = shade (1.4, @bg_color)
-	bg[SELECTED]      = shade (0.5, @selected_bg_color)
+	bg[ACTIVE]        = @selected_bg_color
+	bg[SELECTED]      = @selected_bg_color
 	bg[INSENSITIVE]   = shade (1.05, @bg_color)
 
 	engine "murrine"
@@ -417,7 +417,8 @@ style "progressbar"
 	ythickness   = 0
 
 	fg[PRELIGHT]	= @selected_fg_color
-	bg[NORMAL]	= shade (1.05, @bg_color)
+	bg[NORMAL]	= shade (0.15, @fg_color)
+	bg[ACTIVE]	= shade (0.15, @fg_color)
 	bg[SELECTED]	= shade (1.05, @selected_bg_color)
 
 	engine "murrine"
@@ -509,17 +510,17 @@ style "scale" = "button"
 	GtkWidget	::focus-line-width	= 0
 	GtkWidget	::focus-padding		= 0
 
-	bg[ACTIVE]		= shade(1.4, @bg_color)
-	bg[NORMAL]		= shade(1.4, @bg_color)
-	bg[PRELIGHT]		= shade(1.4, @bg_color)
-	bg[SELECTED]		= @selected_bg_color
+	bg[ACTIVE]		= shade(0.25, "#4ED464")
+	bg[NORMAL]		= "#4ED464"
+	bg[PRELIGHT]		= "#4ED464"
+	bg[SELECTED]		= "#4ED464"
 	bg[INSENSITIVE]		= shade (0.98, @bg_color)
 
 	engine "murrine"
 	{
 		border_shades 		= {1.05,1.05}
-		contrast			    = 0.2
-		lightborderstyle	= 1
+		contrast			    = 0.001
+		lightborderstyle	= 0
 		roundness			    = 7
 		trough_shades			= {1.05, 1.05}
 		trough_border_shades	= {1.05, 1.05}
@@ -1189,6 +1190,22 @@ widget_class "*<GtkListItem>*"		style "fg-is-text-color-workaround"
 # Only match GtkCList and not the parent widgets, because that would also change the headers.
 widget_class "*<GtkCList>"		style "fg-is-text-color-workaround"
 widget_class "*<EelEditableLabel>"	style "fg-is-text-color-workaround"
+
+# Text Style
+style "text" = "default" {
+  engine "murrine" { textstyle = 0 }
+}
+
+style "menu_text" = "menu_item" {
+  engine "murrine" { textstyle = 0 }
+}
+
+# Fixes ugly text shadows for insensitive text
+widget_class "*<GtkLabel>"                                          style "text"
+widget_class "*<GtkMenu>*<GtkLabel>"                                style "menu_text" 
+widget_class "*<GtkComboBox>*<GtkCellLayout>"                       style "text"
+widget_class "*<GtkNotebook>*<GtkLabel>"                            style "text"
+widget_class "*<GtkNotebook>*<GtkCellLayout>"                       style "text"
 
 # panel theming
 include "panel.rc"
